@@ -3,7 +3,6 @@ import 'dart:io';
 import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:cloud_functions/cloud_functions.dart';
 import 'package:crypto/crypto.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -68,13 +67,13 @@ class AppleMusicAuthServices {
           );
         }
 
-        // Call Cloud Function to get Music User Token
-        HttpsCallable callable =
-            FirebaseFunctions.instance.httpsCallable('getMusicUserToken');
+        // // Call Cloud Function to get Music User Token
+        // HttpsCallable callable =
+        //     FirebaseFunctions.instance.httpsCallable('getMusicUserToken');
 
-        await callable.call({
-          'authorizationCode': appleCredential.authorizationCode,
-        });
+        // await callable.call({
+        //   'authorizationCode': appleCredential.authorizationCode,
+        // });
       } else {
         // Handle case where user is null after sign in
         debugPrint("ERROR: User is null after sign in.");

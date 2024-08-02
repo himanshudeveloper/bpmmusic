@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+
+final categoryNotifierprovider =
+    ChangeNotifierProvider((ref) => CategoryNotifier());
 
 class CategoryNotifier extends ChangeNotifier {
   String _activeCategory = "曲";

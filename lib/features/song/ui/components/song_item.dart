@@ -28,8 +28,8 @@ class SongItem extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 4.0),
       child: ListTile(
         contentPadding: const EdgeInsets.only(
-          left: 14.0,
-        ),
+            // left: 14.0,
+            ),
         selected: isPlaying,
         selectedTileColor:
             Theme.of(context).colorScheme.primaryContainer.withOpacity(0.25),
@@ -39,6 +39,8 @@ class SongItem extends StatelessWidget {
         // Handle tap on the ListTile
         onTap: () => onSongTap(),
         // Build leading widget (artwork)
+
+        // leading: Text(url.toString()),
         leading: ArtWorkView(url: url, height: 45, width: 45),
         // Build title and subtitle widgets
         title: _buildTitle(context),

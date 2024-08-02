@@ -1,9 +1,8 @@
-import 'package:bmp_music/features/album/ui/components/albums_grid_view.dart';
-import 'package:bmp_music/features/album/ui/components/albums_list_view.dart';
+import 'package:bmp_music/features/library/views/widgets/album.dart';
+import 'package:bmp_music/features/library/views/widgets/artist.dart';
+import 'package:bmp_music/features/library/views/widgets/playlist.dart';
+import 'package:bmp_music/features/library/views/widgets/song.dart';
 import 'package:flutter/material.dart';
-
-import '../components/category_card.dart';
-import '../utils/color_utils.dart';
 
 class LibraryScreen extends StatefulWidget {
   const LibraryScreen({super.key});
@@ -30,10 +29,77 @@ class _LibraryScreenState extends State<LibraryScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        _buildAlbums(),
-      ],
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            ListTile(
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return Playlist();
+                }));
+              },
+              leading: Icon(
+                Icons.queue_music_sharp,
+                size: 30,
+              ),
+              title: Text(
+                "playlists",
+                style: TextStyle(fontSize: 20),
+              ),
+            ),
+            Divider(),
+            ListTile(
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return Album();
+                }));
+              },
+              leading: Icon(
+                Icons.copy,
+                size: 30,
+              ),
+              title: Text(
+                "Album",
+                style: TextStyle(fontSize: 20),
+              ),
+            ),
+            Divider(),
+            ListTile(
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return Artist();
+                }));
+              },
+              leading: Icon(
+                Icons.my_library_music_rounded,
+                size: 30,
+              ),
+              title: Text(
+                "Artists",
+                style: TextStyle(fontSize: 20),
+              ),
+            ),
+            Divider(),
+            ListTile(
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return Song();
+                }));
+              },
+              leading: Icon(
+                Icons.music_note,
+                size: 30,
+              ),
+              title: Text(
+                "Songs",
+                style: TextStyle(fontSize: 20),
+              ),
+            ),
+            Divider(),
+          ],
+        ),
+      ),
     );
 
     // return Scaffold(
@@ -55,19 +121,19 @@ class _LibraryScreenState extends State<LibraryScreen> {
   }
 
   Widget _buildAlbums() {
-    return Column(
+    return const Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Padding(
+        Padding(
           padding: EdgeInsets.symmetric(vertical: 8.0),
           child: Text("アルバム"),
         ),
-        SizedBox(
-          height: MediaQuery.of(context).size.height * 0.3,
-          width: double.infinity,
-          child: const AlbumsListView(),
-        ),
+        // SizedBox(
+        //   height: MediaQuery.of(context).size.height * 0.3,
+        //   width: double.infinity,
+        //   child: const AlbumsListView(),
+        // ),
       ],
     );
   }

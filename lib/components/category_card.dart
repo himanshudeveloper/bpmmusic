@@ -1,23 +1,23 @@
 import 'package:bmp_music/notifiers/category_notifier.dart';
 import 'package:bmp_music/utils/color_utils.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class CategoryCard extends StatelessWidget {
+class CategoryCard extends ConsumerWidget {
   final String title;
   final IconData icon;
   const CategoryCard({super.key, required this.title, required this.icon});
 
   @override
-  Widget build(BuildContext context) {
-    bool isActive = context.watch<CategoryNotifier>().activeCategory == title;
+  Widget build(BuildContext context, WidgetRef ref) {
+    bool isActive = ref.watch(categoryNotifierprovider).activeCategory == title;
 
     return Expanded(
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: InkWell(
           onTap: () {
-            context.read<CategoryNotifier>().updateCategory(title);
+            ref.read(categoryNotifierprovider).updateCategory(title);
           },
           child: Container(
             decoration: BoxDecoration(

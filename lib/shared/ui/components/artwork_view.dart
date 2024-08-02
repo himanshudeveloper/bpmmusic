@@ -14,6 +14,11 @@ class ArtWorkView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String finalUrl = url!
+        .replaceAll('{w}', '${width.toInt()}')
+        .replaceAll('{h}', '${height.toInt()}');
+
+    print("Filnalurlfffff   $finalUrl");
     return Container(
       height: height,
       width: width,
@@ -28,7 +33,10 @@ class ArtWorkView extends StatelessWidget {
               child: FadeInImage(
                 height: height,
                 width: width,
-                image: NetworkImage(url!),
+                imageErrorBuilder: (context, error, stackTrace) {
+                  return Image.memory(kTransparentImage);
+                },
+                image: NetworkImage(finalUrl),
                 placeholder: MemoryImage(kTransparentImage),
                 fadeInDuration: const Duration(milliseconds: 700),
                 fit: BoxFit.cover,

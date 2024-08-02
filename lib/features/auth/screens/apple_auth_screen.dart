@@ -3,22 +3,23 @@ import 'package:bmp_music/shared/ui/screens/home_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
-class AppleAuthScreen extends StatefulWidget {
+class AppleAuthScreen extends ConsumerStatefulWidget {
   const AppleAuthScreen({super.key});
 
   @override
-  State<AppleAuthScreen> createState() => _AppleAuthScreenState();
+  ConsumerState<AppleAuthScreen> createState() => _AppleAuthScreenState();
 }
 
-class _AppleAuthScreenState extends State<AppleAuthScreen> {
+class _AppleAuthScreenState extends ConsumerState<AppleAuthScreen> {
   @override
   Widget build(BuildContext context) {
-    User? user = FirebaseAuth.instance.currentUser;
-
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        scrolledUnderElevation: 0,
+      ),
       body: Padding(
         padding: const EdgeInsets.all(18.0),
         child: Column(
@@ -36,7 +37,9 @@ class _AppleAuthScreenState extends State<AppleAuthScreen> {
               padding: const EdgeInsets.only(bottom: 32),
               child: SignInWithAppleButton(
                 onPressed: () async => await AppleAuthServices.signIn().then(
-                  (_) {
+                  (_) async {
+                    User? user = FirebaseAuth.instance.currentUser;
+
                     if (user != null) {
                       Navigator.pushReplacement(
                         context,

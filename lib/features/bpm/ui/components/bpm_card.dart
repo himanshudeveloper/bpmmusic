@@ -1,18 +1,20 @@
 import 'package:bmp_music/features/bpm/notifiers/bpm_notifier.dart';
 import 'package:bmp_music/features/bpm/ui/screens/bpm_settings_screen.dart';
 import 'package:bmp_music/utils/color_utils.dart';
-import 'package:cloud_functions/cloud_functions.dart';
 import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:provider/provider.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class BPMCard extends StatelessWidget {
+class BPMCard extends ConsumerWidget {
   const BPMCard({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    ref.read(bmpNotifierprovider.notifier).init();
+    final bmp = ref.watch(bmpNotifierprovider);
+
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Container(
@@ -35,7 +37,7 @@ class BPMCard extends StatelessWidget {
               ),
               const SizedBox(height: 10),
               Text(
-                context.watch<BPMNotifier>().value.toString(),
+                bmp.value.toString(),
                 style: const TextStyle(
                   fontSize: 56,
                   fontWeight: FontWeight.bold,
@@ -56,12 +58,12 @@ class BPMCard extends StatelessWidget {
 
                   // debugPrint("RESULT ${result.data}");
 
-                  callCloudFunction();
-                  // Get.to(
-                  //   () => const BPMSettingsScreen(),
-                  //   transition: Transition.rightToLeft,
-                  //   duration: const Duration(milliseconds: 700),
-                  // );
+                  //   callCloudFunction();
+                  Get.to(
+                    () => const BPMSettingsScreen(),
+                    transition: Transition.rightToLeft,
+                    duration: const Duration(milliseconds: 700),
+                  );
                 },
                 child: Container(
                   decoration: BoxDecoration(

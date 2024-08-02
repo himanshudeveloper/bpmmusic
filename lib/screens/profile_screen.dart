@@ -15,19 +15,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        actions: [
-          IconButton.filledTonal(
-            onPressed: () {},
-            icon: const Icon(Icons.create_rounded),
-          ),
-        ],
-      ),
+      appBar: AppBar(),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _buildProfile(),
+          Padding(
+            padding: const EdgeInsets.all(18.0),
+            child: _buildProfile(),
+          ),
           // _audioItems(items),
           _otherSettings(),
         ],
@@ -110,77 +106,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
         ),
       ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          ListTile(
-            leading: Icon(
-              Icons.share_rounded,
-              color: ColorUtils.lightRed,
-            ),
-            title: const Text(
-              "接続されたサービス",
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 16,
-              ),
-            ),
-            trailing: Icon(
-              Icons.arrow_forward_ios_rounded,
-              color: ColorUtils.darkGrey,
-            ),
+      child: ListTile(
+        onTap: () async {
+          await AppleAuthServices.signOut();
+        },
+        leading: Icon(
+          Icons.logout_rounded,
+          color: ColorUtils.lightRed,
+        ),
+        title: const Text(
+          "ログアウト",
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 16,
           ),
-          ListTile(
-            leading: Icon(
-              Icons.info_outline_rounded,
-              color: ColorUtils.lightRed,
-            ),
-            title: const Text(
-              "について",
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 16,
-              ),
-            ),
-            trailing: Icon(
-              Icons.arrow_forward_ios_rounded,
-              color: ColorUtils.darkGrey,
-            ),
-          ),
-          ListTile(
-            leading: Icon(
-              Icons.question_mark_rounded,
-              color: ColorUtils.lightRed,
-            ),
-            title: const Text(
-              "ヘルプ",
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 16,
-              ),
-            ),
-            trailing: Icon(
-              Icons.arrow_forward_ios_rounded,
-              color: ColorUtils.darkGrey,
-            ),
-          ),
-          ListTile(
-            onTap: () async {
-              await AppleAuthServices.signOut();
-            },
-            leading: Icon(
-              Icons.logout_rounded,
-              color: ColorUtils.lightRed,
-            ),
-            title: const Text(
-              "ログアウト",
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 16,
-              ),
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }
@@ -192,53 +132,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
     String name = user?.displayName ?? "";
     String email = user?.email ?? "";
 
-    return Expanded(
-      child: Container(
-        color: ColorUtils.lightGrey,
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Stack(
-                children: [
-                  CircleAvatar(
-                    radius: 75,
-                    backgroundImage: photo.isEmpty ? null : NetworkImage(photo),
-                    child:
-                        photo.isEmpty ? const Icon(Icons.person_rounded) : null,
-                  ),
-                  Positioned.fill(
-                    child: Align(
-                      alignment: Alignment.bottomRight,
-                      child: Icon(
-                        Icons.verified_rounded,
-                        color: ColorUtils.lightRed,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  name,
-                  style: const TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-              Text(
-                email,
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
-                  color: ColorUtils.lightBlack,
-                ),
-              ),
-            ],
-          ),
+    return Container(
+      color: ColorUtils.lightGrey,
+      child: Text(
+        "ID :  $email",
+        style: TextStyle(
+          fontSize: 16,
+          fontWeight: FontWeight.w500,
+          color: ColorUtils.lightBlack,
         ),
       ),
     );

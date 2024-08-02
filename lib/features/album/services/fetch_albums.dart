@@ -1,7 +1,7 @@
-import '../models/album_model.dart';
+// import '../models/album_model.dart';
 
-Future<List<Album>> fetchAlbums() async {
-  List<Album> results = [];
+// Future<List<Album>> fetchAlbums() async {
+//   List<Album> results = [];
 
-  return results;
-}
+//   return results;
+// }

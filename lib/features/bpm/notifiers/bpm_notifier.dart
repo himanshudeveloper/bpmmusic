@@ -1,6 +1,9 @@
 import 'package:bmp_music/features/bpm/services/read_bpm.dart';
 import 'package:bmp_music/features/bpm/services/save_bpm.dart';
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+
+final bmpNotifierprovider = ChangeNotifierProvider((ref) => BPMNotifier());
 
 class BPMNotifier extends ChangeNotifier {
   int _value = 0;

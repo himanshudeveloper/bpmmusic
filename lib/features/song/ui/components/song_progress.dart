@@ -2,11 +2,11 @@ import 'package:audio_service/audio_service.dart';
 import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
 
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../notifiers/song_notifier.dart';
 
-class SongProgress extends StatelessWidget {
+class SongProgress extends ConsumerWidget {
   final Duration totalDuration;
 
   const SongProgress({
@@ -15,9 +15,9 @@ class SongProgress extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
-    SongNotifier songNotifier = context.watch<SongNotifier>();
-    final songHandler = songNotifier.songHandler;
+  Widget build(BuildContext context, WidgetRef ref) {
+    SongNotifier songNotifier = ref.watch(songnNotifierprovider);
+    //final songHandler = songNotifier.songHandler;
     return StreamBuilder<Duration>(
       stream: AudioService.position,
       builder: (context, positionSnapshot) {
@@ -32,7 +32,7 @@ class SongProgress extends StatelessWidget {
           total: totalDuration,
           // Callback for seeking when the user interacts with the progress bar
           onSeek: (position) {
-            songHandler.seek(position);
+            // songHandler.seek(position);
           },
           // Customize the appearance of the progress bar
           barHeight: 5,

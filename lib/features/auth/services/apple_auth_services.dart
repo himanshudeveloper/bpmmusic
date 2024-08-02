@@ -2,8 +2,6 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:cloud_functions/cloud_functions.dart';
 import 'package:crypto/crypto.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -50,31 +48,16 @@ class AppleAuthServices {
 
       if (userCredential.user != null) {
         // Reference to user's document in Firestore
-        final userDocRef = FirebaseFirestore.instance
-            .collection("users")
-            .doc(userCredential.user!.uid);
-        // Check if the user document exists
-        final userDocSnapshot = await userDocRef.get();
 
-        if (userDocSnapshot.exists == false) {
-          // User doesn't exist, create new document
-          await userDocRef.set(
-            {
-              'id': userCredential.user?.uid,
-              'email': userCredential.user?.email,
-              'musicUserToken': null,
-              'expirationTime': null,
-            },
-          );
-        }
+        // // Call Cloud Function to get Music User Token
+        // HttpsCallable callable = FirebaseFunctions.instance
+        //     .httpsCallable('exchangeAuthorizationCodeForMusicToken');
 
-        // Call Cloud Function to get Music User Token
-        // HttpsCallable callable =
-        //     FirebaseFunctions.instance.httpsCallable('exchangeAuthorizationCodeForMusicToken');
-
-        // await callable.call({
+        // final response = await callable.call({
         //   'authorizationCode': appleCredential.authorizationCode,
         // });
+
+        //  print("${response.data}" + "response");
       } else {
         // Handle case where user is null after sign in
         debugPrint("ERROR: User is null after sign in.");
@@ -104,5 +87,6 @@ class AppleAuthServices {
   // Sign out method to sign out from Firebase
   static Future<void> signOut() async {
     await FirebaseAuth.instance.signOut();
+    // await AppleS.signout();
   }
 }

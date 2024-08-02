@@ -1,20 +1,22 @@
 import 'package:bmp_music/features/bpm/ui/components/bpm_change_card.dart';
 import 'package:bmp_music/features/bpm/notifiers/bpm_notifier.dart';
+import 'package:bmp_music/features/song/providers/selected_music_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../../utils/color_utils.dart';
 
-class BPMSettingsScreen extends StatefulWidget {
+class BPMSettingsScreen extends ConsumerStatefulWidget {
   const BPMSettingsScreen({super.key});
 
   @override
-  State<BPMSettingsScreen> createState() => _BPMSettingsScreenState();
+  ConsumerState<BPMSettingsScreen> createState() => _BPMSettingsScreenState();
 }
 
-class _BPMSettingsScreenState extends State<BPMSettingsScreen> {
+class _BPMSettingsScreenState extends ConsumerState<BPMSettingsScreen> {
   @override
   Widget build(BuildContext context) {
+    final bmp = ref.watch(bmpNotifierprovider);
     return Scaffold(
       appBar: AppBar(
         title: const Text("BPMの変更"),
@@ -52,9 +54,9 @@ class _BPMSettingsScreenState extends State<BPMSettingsScreen> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          const Text(
-                            "200",
-                            style: TextStyle(
+                          Text(
+                            (bmp.value * 5).toString(),
+                            style: const TextStyle(
                               fontSize: 48,
                               fontWeight: FontWeight.bold,
                             ),
@@ -78,7 +80,7 @@ class _BPMSettingsScreenState extends State<BPMSettingsScreen> {
           ),
           Padding(
             padding: const EdgeInsets.symmetric(
-              vertical: 16.0,
+              vertical: 1.0,
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -90,9 +92,15 @@ class _BPMSettingsScreenState extends State<BPMSettingsScreen> {
                   ),
                   checkColor: Colors.white,
                   activeColor: ColorUtils.lightRed,
-                  value: context.watch<BPMNotifier>().checked,
+                  value: bmp.checked,
                   onChanged: (c) {
-                    context.read<BPMNotifier>().updateChecked();
+                    if (c == false) {
+                      ref.read(bmpNotifierprovider).updateValue((100).toInt());
+                      ref
+                          .read(selectedMusicProvider.notifier)
+                          .setplackrate(1.0);
+                    }
+                    ref.read(bmpNotifierprovider).updateChecked();
                   },
                 ),
                 Text(

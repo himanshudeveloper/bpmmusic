@@ -1,35 +1,32 @@
-import 'package:audio_service/audio_service.dart';
-import 'package:bmp_music/features/album/notifiers/album_notifier.dart';
 import 'package:bmp_music/features/auth/screens/apple_auth_screen.dart';
-import 'package:bmp_music/features/auth/screens/apple_music_auth_screen.dart';
-import 'package:bmp_music/features/song/notifiers/song_notifier.dart';
-import 'package:bmp_music/features/bpm/notifiers/bpm_notifier.dart';
+import 'package:bmp_music/features/song/providers/selected_music_provider.dart';
+import 'package:bmp_music/shared/probvider/token_provider.dart';
 import 'package:bmp_music/shared/ui/screens/main_screen.dart';
 import 'package:bmp_music/utils/color_utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/route_manager.dart';
-import 'package:provider/provider.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import 'features/song/services/song_handler.dart';
-import 'firebase_options.dart';
-
-SongHandler _songHandler = SongHandler();
+// SongHandler _songHandler = SongHandler();
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  _songHandler = await AudioService.init(
-    builder: () => SongHandler(),
-    config: const AudioServiceConfig(
-      androidNotificationChannelId: 'com.musicpacemaker.app',
-      androidNotificationChannelName: 'Music Pacemaker',
-      androidNotificationOngoing: true,
-      androidShowNotificationBadge: true,
-    ),
-  );
-  runApp(const MainApp());
+  await Firebase.initializeApp(
+      //options: DefaultFirebaseOptions.currentPlatform
+      );
+  // _songHandler = await AudioService.init(
+  //   builder: () => SongHandler(),
+  //   config: const AudioServiceConfig(
+  //     androidNotificationChannelId: 'com.musicpacemaker.app',
+  //     androidNotificationChannelName: 'Music Pacemaker',
+  //     androidNotificationOngoing: true,
+  //     androidShowNotificationBadge: true,
+  //   ),
+  // );
+  runApp(const ProviderScope(child: MainApp()));
 }
 
 class MainApp extends StatelessWidget {
@@ -37,31 +34,45 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(
-          create: (context) => SongNotifier()..assignHandler(_songHandler),
-        ),
-        ChangeNotifierProvider(create: (_) => AlbumNotifier()),
-        ChangeNotifierProvider(create: (_) => BPMNotifier()..init()),
-      ],
-      child: GetMaterialApp(
-        theme: ThemeData(
-          colorSchemeSeed: ColorUtils.darkRed,
-          useMaterial3: true,
-          brightness: Brightness.light,
-        ),
-        home: const CheckAuthStatus(),
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.landscapeLeft,
+      DeviceOrientation.landscapeRight
+    ]);
+    return
+
+        // MultiProvider(
+        //   providers: [
+        //     ChangeNotifierProvider(
+        //       create: (context) => SongNotifier()..assignHandler(_songHandler),
+        //     ),
+        //     ChangeNotifierProvider(
+        //       create: (_) => SearchSongNotifier()..assignHandler(_songHandler),
+        //     ),
+        //     ChangeNotifierProvider(create: (_) => AlbumNotifier()),
+        //     ChangeNotifierProvider(create: (_) => BPMNotifier()..init()),
+        //   ],
+        // child:
+
+        GetMaterialApp(
+      title: "beat runner - with apple music",
+      theme: ThemeData(
+        colorSchemeSeed: ColorUtils.darkRed,
+        useMaterial3: true,
+        brightness: Brightness.light,
       ),
+      debugShowCheckedModeBanner: false,
+      home: const CheckAuthStatus(),
+      //   ),
     );
   }
 }
 
-class CheckAuthStatus extends StatelessWidget {
+class CheckAuthStatus extends ConsumerWidget {
   const CheckAuthStatus({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return StreamBuilder<User?>(
       stream: FirebaseAuth.instance.authStateChanges(),
       builder: (context, snapshot) {
@@ -69,7 +80,21 @@ class CheckAuthStatus extends StatelessWidget {
         if (user == null) {
           return const AppleAuthScreen();
         } else {
-          return const AppleMusicAuthPage();
+          ref.read(selectedMusicProvider.notifier).requestpermission();
+
+          User? user = FirebaseAuth.instance.currentUser;
+
+          if (user != null) {
+            print("logijnngngn");
+            ref
+                .read(tokenProviderProvider.notifier)
+                .checktoken(user.uid, user.email.toString());
+          }
+
+          //  String token =
+          //           await ref.read(selectedMusicProvider.notifier).devtoken();
+
+          return const MainScreen();
         }
       },
     );
