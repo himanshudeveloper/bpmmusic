@@ -55,7 +55,7 @@ class MainApp extends StatelessWidget {
         // child:
 
         GetMaterialApp(
-      title: "beat runner - with apple music",
+      title: "beat changer with music app",
       theme: ThemeData(
         colorSchemeSeed: ColorUtils.darkRed,
         useMaterial3: true,

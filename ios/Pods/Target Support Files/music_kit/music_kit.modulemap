@@ -1,0 +1,6 @@
+framework module music_kit {
+  umbrella header "music_kit-umbrella.h"
+
+  export *
+  module * { export * }
+}
