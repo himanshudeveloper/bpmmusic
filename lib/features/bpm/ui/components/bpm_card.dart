@@ -36,12 +36,17 @@ class BPMCard extends ConsumerWidget {
                 ),
               ),
               const SizedBox(height: 10),
-              Text(
-                bmp.value.toString(),
-                style: const TextStyle(
-                  fontSize: 56,
-                  fontWeight: FontWeight.bold,
-                ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    bmp.value.toString(),
+                    style: const TextStyle(
+                      fontSize: 56,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
               ),
               const SizedBox(height: 20),
               GestureDetector(
@@ -62,7 +67,7 @@ class BPMCard extends ConsumerWidget {
                   Get.to(
                     () => const BPMSettingsScreen(),
                     transition: Transition.rightToLeft,
-                    duration: const Duration(milliseconds: 700),
+                    duration: const Duration(milliseconds: 500),
                   );
                 },
                 child: Container(

@@ -1,14 +1,14 @@
 class LibrarySongModel {
-  List<Data>? data;
+  List<LibData>? data;
   Meta? meta;
 
   LibrarySongModel({this.data, this.meta});
 
   LibrarySongModel.fromJson(Map<String, dynamic> json) {
     if (json['data'] != null) {
-      data = <Data>[];
+      data = <LibData>[];
       json['data'].forEach((v) {
-        data!.add(new Data.fromJson(v));
+        data!.add(LibData.fromJson(v));
       });
     }
     meta = json['meta'] != null ? new Meta.fromJson(json['meta']) : null;
@@ -26,15 +26,15 @@ class LibrarySongModel {
   }
 }
 
-class Data {
+class LibData {
   String? id;
   String? type;
   String? href;
   Attributes? attributes;
 
-  Data({this.id, this.type, this.href, this.attributes});
+  LibData({this.id, this.type, this.href, this.attributes});
 
-  Data.fromJson(Map<String, dynamic> json) {
+  LibData.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     type = json['type'];
     href = json['href'];

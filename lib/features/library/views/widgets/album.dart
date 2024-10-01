@@ -1,4 +1,3 @@
-import 'package:bmp_music/features/album/ui/screens/album_screen.dart';
 import 'package:bmp_music/features/library/provider/library_album_provider.dart';
 import 'package:bmp_music/features/library/views/page/single_album_page.dart';
 import 'package:bmp_music/shared/ui/components/artwork_view.dart';
@@ -32,6 +31,9 @@ class Album extends ConsumerWidget {
             child: albums.when(
                 data: (data) {
                   return GridView.builder(
+                      primary: false,
+                      physics: const NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
                       itemCount: data.data!.length,
                       gridDelegate:
                           const SliverGridDelegateWithFixedCrossAxisCount(

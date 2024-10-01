@@ -2,14 +2,10 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-    <key>ITSAppUsesNonExemptEncryption</key><false/>
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
-	<key>NSMicrophoneUsageDescription</key>
-    <string>This app requires access to the microphone to enable voice recording features.</string>
-
 	<key>CFBundleDisplayName</key>
 	<string>beat changer with music app</string>
 	<key>CFBundleExecutable</key>
@@ -28,21 +24,38 @@
 	<string>????</string>
 	<key>CFBundleVersion</key>
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>http</string>
+		<string>https</string>
+	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppleMusicUsageDescription</key>
-	<string>App needs access to your Apple Music library.</string>
+	<string>beat changer with music app needs access to your Apple Music library to allow you to show personalized show , library , artist and customize the playback speed of songs During Workout</string>
+	<key>NSUserTrackingUsageDescription</key>
+	<string>"beat changer with music app stores your email locally to display it on your profile page, helping you easily manage your account settings." </string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>audio</string>
+		<string>fetch</string>
+		<string>processing</string>
+	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
+	<key>BGTaskSchedulerPermittedIdentifiers</key>
+<array>
+    <string>dev.flutter.background.refresh</string>
+</array>
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
-		
-		
 	</array>
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>

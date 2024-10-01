@@ -1,5 +1,5 @@
-import 'package:bmp_music/features/album/models/album_model.dart';
-import 'package:bmp_music/features/album/models/artist_model.dart';
+// import 'package:bmp_music/features/album/models/album_model.dart';
+// import 'package:bmp_music/features/album/models/artist_model.dart';
 import 'package:bmp_music/features/song/models/searc_song_response.dart';
 import 'package:bmp_music/features/song/models/song_model.dart';
 import 'package:bmp_music/features/song/repo/song_repo.dart';
@@ -28,25 +28,27 @@ class HttpSongRepo extends SongRepo {
   Future<SearchSongResponse> searchsong(
       {required String search, required String page}) async {
     final data = await dioservice.get(
-        "catalog/jp/search?term=$search&limit=25&types=songs,artists,albums&with=topResults");
+        "catalog/jp/search?term=$search&limit=25&types=songs&with=topResults");
+    // final data = await dioservice.get(
+    //     "catalog/jp/search?term=$search&limit=25&types=songs,artists,albums&with=topResults");
     final SearchSongResponse songs = SearchSongResponse.fromJson(data);
 
     return songs;
   }
 
-  @override
-  Future<AlbumModel> getalbum({required String id}) async {
-    final data = await dioservice.get("$albumpath?ids=$id");
-    final AlbumModel songs = AlbumModel.fromJson(data);
+  // @override
+  // Future<AlbumModel> getalbum({required String id}) async {
+  //   final data = await dioservice.get("$albumpath?ids=$id");
+  //   final AlbumModel songs = AlbumModel.fromJson(data);
 
-    return songs;
-  }
+  //   return songs;
+  // }
 
-  @override
-  Future<ArtistModel> getartist({required String id}) async {
-    final data = await dioservice.get("$artistpath?ids=$id&views=top-songs");
-    final ArtistModel songs = ArtistModel.fromJson(data);
+  // @override
+  // Future<ArtistModel> getartist({required String id}) async {
+  //   final data = await dioservice.get("$artistpath?ids=$id&views=top-songs");
+  //   final ArtistModel songs = ArtistModel.fromJson(data);
 
-    return songs;
-  }
+  //   return songs;
+  // }
 }

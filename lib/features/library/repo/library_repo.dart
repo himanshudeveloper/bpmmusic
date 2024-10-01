@@ -21,13 +21,13 @@ abstract class LibraryRepo {
   String get libraryplaylistpath;
   String get singleplaylistpath;
   String get singlealbumpath;
-
+  Future<LibrarySongModel> getmultiplealbumSong({required String ids});
   Future<LibrarySongModel> getlibrarySong({required String index});
   Future<LibraryAlbumModel> getlibraryAlbum();
   Future<LibraryArtistModel> getlibraryArtist();
   Future<LibraryPlaylistModel> getlibraryPlaylist();
   Future<SinglePlaylistLibraryModel> getsingleplaylistLibrary(
       {required String id});
-  Future<SingleAlbumtLibraryModel> getsinglealbumLibrary({required String id});
+  Future<LibrarySongModel> getsinglealbumLibrary({required String id});
   Future<SingleArtistLibraryModel> getsingleartistLibrary({required String id});
 }

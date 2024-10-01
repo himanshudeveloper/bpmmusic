@@ -1,7 +1,7 @@
 import 'package:bmp_music/features/bpm/notifiers/bpm_notifier.dart';
+import 'package:bmp_music/features/song/enums.dart';
 import 'package:bmp_music/features/song/notifiers/song_notifier.dart';
 import 'package:bmp_music/features/song/providers/select_music_model.dart';
-import 'package:just_audio/just_audio.dart';
 import 'package:music_kit/music_kit.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'selected_music_provider.g.dart';
@@ -21,8 +21,9 @@ class SelectedMusic extends _$SelectedMusic {
   //   state = state.copyWith(duration: duration!.inMinutes.toString());
   // }
 
-  void requestpermission() async {
+  Future<MusicAuthorizationStatus> requestpermission() async {
     final authorize = await musicKit.requestAuthorizationStatus();
+    return authorize;
   }
 
   Future<String> devtoken() async {
@@ -49,7 +50,10 @@ class SelectedMusic extends _$SelectedMusic {
     musicKit.play();
 
     final bmp = ref.read(bmpNotifierprovider);
-    musicKit.setPlaybackRate((bmp).value / 100);
+
+    Future.delayed(const Duration(seconds: 1), () {
+      musicKit.setPlaybackRate(((bmp).value / 100));
+    });
   }
 
   Future<double> getplaybacktime() async {
@@ -61,10 +65,17 @@ class SelectedMusic extends _$SelectedMusic {
   void addmusiclist(
       {required List<Map<String, dynamic>> songs, required int index}) async {
     await musicKit.setQueueWithItems("songs", items: songs, startingAt: index);
+
     //await musicKit.setQueue("songs", item: song.toJson());
     musicKit.play();
+
     final bmp = ref.read(bmpNotifierprovider);
-    musicKit.setPlaybackRate((bmp).value / 100);
+
+    // Future.delayed(const Duration(seconds: 1), () {
+    //   musicKit.setPlaybackRate(((bmp).value / 100));
+    // });
+
+    print("bmppfp ${bmp.value / 100}");
   }
 
   @override
@@ -139,7 +150,18 @@ class SelectedMusic extends _$SelectedMusic {
       musicKit.pause();
       //state = state.copyWith(isplay: false);
     } else {
+      final bpm = ref.read(bmpNotifierprovider);
+
+      Future.delayed(const Duration(milliseconds: 500), () {
+        if (bpm.checked) {
+          double value = bpm.value / bpm.sfbpm;
+          ref.read(selectedMusicProvider.notifier).setplackrate(value);
+        } else {
+          musicKit.setPlaybackRate(1.0);
+        }
+      });
       musicKit.play();
+
       //state = state.copyWith(isplay: true);
     }
   }

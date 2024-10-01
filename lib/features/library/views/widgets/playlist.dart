@@ -10,34 +10,26 @@ class Playlist extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final playlists = ref.watch(libraryplaylistProvider);
-    return Scaffold(
-      appBar: AppBar(
-        scrolledUnderElevation: 0,
-        title: Text("Library"),
-      ),
-      body: Column(
-        children: [
-          Text("Playlists"),
-          const SizedBox(height: 5),
-          Expanded(
-            child: playlists.when(
-                data: (data) {
-                  return ListView.builder(
-                      itemBuilder: (context, index) {
-                        return PlaylistView(
-                          name: data.data![index].attributes!.name.toString(),
-                          id: data.data![index].id.toString(),
-                        );
-                      },
-                      itemCount: data.data!.length);
-                },
-                error: (err, _) => Text(err.toString()),
-                loading: () => const Center(
-                      child: CircularProgressIndicator(),
-                    )),
-          )
-        ],
-      ),
-    );
+    return playlists.when(
+        data: (data) {
+          return ListView.builder(
+              padding: const EdgeInsets.only(left: 2),
+              primary: false,
+              physics: const NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              itemBuilder: (context, index) {
+                return PlaylistView(
+                  name: data.data![index].attributes!.name.toString(),
+                  id: data.data![index].id.toString(),
+                );
+              },
+              itemCount: data.data!.length);
+        },
+        error: (err, _) => Text(err.toString()),
+        loading: () => const Center(
+              child: CircularProgressIndicator(
+                color: Colors.pink,
+              ),
+            ));
   }
 }

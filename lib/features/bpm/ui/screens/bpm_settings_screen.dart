@@ -17,66 +17,69 @@ class _BPMSettingsScreenState extends ConsumerState<BPMSettingsScreen> {
   @override
   Widget build(BuildContext context) {
     final bmp = ref.watch(bmpNotifierprovider);
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("BPMの変更"),
-        centerTitle: true,
-      ),
-      body: Column(
+    return
+
+        // Scaffold(
+        //   appBar: AppBar(
+        //     title: const Text("BPMの変更"),
+        //     centerTitle: true,
+        //   ),
+        //   body:
+
+        SingleChildScrollView(
+      child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
+          const SizedBox(height: 40),
           const BPMChangeCard(),
-          Padding(
-            padding: const EdgeInsets.only(top: 32.0),
-            child: Column(
-              children: [
-                Text(
-                  "消費カロリー",
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                    color: ColorUtils.lightBlack,
-                  ),
+          Column(
+            children: [
+              Text(
+                "消費カロリー",
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  color: ColorUtils.lightBlack,
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: ColorUtils.lightGrey,
-                      borderRadius: BorderRadius.circular(16.0),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: ColorUtils.lightGrey,
+                    borderRadius: BorderRadius.circular(16.0),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 8.0,
+                      horizontal: 32.0,
                     ),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                        vertical: 8.0,
-                        horizontal: 32.0,
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text(
-                            (bmp.value * 5).toString(),
-                            style: const TextStyle(
-                              fontSize: 48,
-                              fontWeight: FontWeight.bold,
-                            ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          (bmp.value * 5).toString(),
+                          style: const TextStyle(
+                            fontSize: 48,
+                            fontWeight: FontWeight.bold,
                           ),
-                          const SizedBox(width: 10),
-                          Text(
-                            "kcal/時間",
-                            style: TextStyle(
-                              fontSize: 24,
-                              fontWeight: FontWeight.bold,
-                              color: ColorUtils.lightBlack,
-                            ),
+                        ),
+                        const SizedBox(width: 10),
+                        Text(
+                          "kcal/時間",
+                          style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                            color: ColorUtils.lightBlack,
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
           Padding(
             padding: const EdgeInsets.symmetric(
@@ -95,10 +98,14 @@ class _BPMSettingsScreenState extends ConsumerState<BPMSettingsScreen> {
                   value: bmp.checked,
                   onChanged: (c) {
                     if (c == false) {
-                      ref.read(bmpNotifierprovider).updateValue((100).toInt());
                       ref
                           .read(selectedMusicProvider.notifier)
                           .setplackrate(1.0);
+                    } else {
+                      double value = bmp.value / bmp.sfbpm;
+                      ref
+                          .read(selectedMusicProvider.notifier)
+                          .setplackrate(value);
                     }
                     ref.read(bmpNotifierprovider).updateChecked();
                   },

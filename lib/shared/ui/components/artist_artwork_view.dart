@@ -18,7 +18,6 @@ class ArtistArtworkView extends StatelessWidget {
         .replaceAll('{w}', '${width.toInt()}')
         .replaceAll('{h}', '${height.toInt()}');
 
-    print("Filnalurlfffff   $finalUrl");
     return Container(
       height: height,
       width: width,

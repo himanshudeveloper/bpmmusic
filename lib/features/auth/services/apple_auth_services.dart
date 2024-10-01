@@ -87,6 +87,92 @@ class AppleAuthServices {
   // Sign out method to sign out from Firebase
   static Future<void> signOut() async {
     await FirebaseAuth.instance.signOut();
+
     // await AppleS.signout();
+  }
+
+  static Future<void> deleteaccout() async {
+    await FirebaseAuth.instance.currentUser!
+        .delete()
+        .then((value) {}, onError: () {});
+
+    // await AppleS.signout();
+  }
+
+  static Future<void> showdialog(BuildContext context, String id) {
+    return showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Delete your Account?'),
+          content: const Text(
+              '''If you select Delete we will delete your account on our server.
+
+Your app data will also be deleted and you won't be able to retrieve it.
+
+Since this is a security-sensitive operation, you eventually are asked to login before your account can be deleted.'''),
+          actions: [
+            TextButton(
+              child: const Text('Cancel'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: const Text(
+                'Delete',
+              ),
+              onPressed: () async {
+                await deleteUserAccount(id);
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  static Future<void> deleteUserAccount(String id) async {
+    try {
+      await FirebaseAuth.instance.currentUser!.delete();
+    } on FirebaseAuthException catch (e) {
+      print(e);
+
+      if (e.code == "requires-recent-login") {
+        await _reauthenticateAndDelete(id);
+      } else {
+        // Handle other Firebase exceptions
+      }
+    } catch (e) {
+      print(e);
+
+      // Handle general exception
+    }
+  }
+
+  static Future<void> _reauthenticateAndDelete(String id) async {
+    try {
+      final providerData =
+          FirebaseAuth.instance.currentUser?.providerData.first;
+
+      if (AppleAuthProvider().providerId == providerData!.providerId) {
+        await FirebaseAuth.instance.currentUser!
+            .reauthenticateWithProvider(AppleAuthProvider());
+      } else if (GoogleAuthProvider().providerId == providerData.providerId) {
+        await FirebaseAuth.instance.currentUser!
+            .reauthenticateWithProvider(GoogleAuthProvider());
+      }
+
+      await FirebaseAuth.instance.currentUser?.delete();
+      // final userDocRef = FirebaseFirestore.instance.collection("users").doc(id);
+
+      // final userDocSnapshot = await userDocRef.get();
+      // if (userDocSnapshot.exists) {
+      //   await userDocRef.delete();
+      // }
+    } catch (e) {
+      // Handle exceptions
+    }
   }
 }

@@ -6,16 +6,10 @@
 
 #import "GeneratedPluginRegistrant.h"
 
-#if __has_include(<audio_service/AudioServicePlugin.h>)
-#import <audio_service/AudioServicePlugin.h>
+#if __has_include(<app_tracking_transparency/AppTrackingTransparencyPlugin.h>)
+#import <app_tracking_transparency/AppTrackingTransparencyPlugin.h>
 #else
-@import audio_service;
-#endif
-
-#if __has_include(<audio_session/AudioSessionPlugin.h>)
-#import <audio_session/AudioSessionPlugin.h>
-#else
-@import audio_session;
+@import app_tracking_transparency;
 #endif
 
 #if __has_include(<cloud_firestore/FLTFirebaseFirestorePlugin.h>)
@@ -36,16 +30,16 @@
 @import firebase_core;
 #endif
 
+#if __has_include(<flutter_background_service_ios/FlutterBackgroundServicePlugin.h>)
+#import <flutter_background_service_ios/FlutterBackgroundServicePlugin.h>
+#else
+@import flutter_background_service_ios;
+#endif
+
 #if __has_include(<fluttertoast/FluttertoastPlugin.h>)
 #import <fluttertoast/FluttertoastPlugin.h>
 #else
 @import fluttertoast;
-#endif
-
-#if __has_include(<just_audio/JustAudioPlugin.h>)
-#import <just_audio/JustAudioPlugin.h>
-#else
-@import just_audio;
 #endif
 
 #if __has_include(<music_kit/MusicKitPlugin.h>)
@@ -78,28 +72,27 @@
 @import sign_in_with_apple;
 #endif
 
-#if __has_include(<sqflite/SqflitePlugin.h>)
-#import <sqflite/SqflitePlugin.h>
+#if __has_include(<url_launcher_ios/URLLauncherPlugin.h>)
+#import <url_launcher_ios/URLLauncherPlugin.h>
 #else
-@import sqflite;
+@import url_launcher_ios;
 #endif
 
 @implementation GeneratedPluginRegistrant
 
 + (void)registerWithRegistry:(NSObject<FlutterPluginRegistry>*)registry {
-  [AudioServicePlugin registerWithRegistrar:[registry registrarForPlugin:@"AudioServicePlugin"]];
-  [AudioSessionPlugin registerWithRegistrar:[registry registrarForPlugin:@"AudioSessionPlugin"]];
+  [AppTrackingTransparencyPlugin registerWithRegistrar:[registry registrarForPlugin:@"AppTrackingTransparencyPlugin"]];
   [FLTFirebaseFirestorePlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTFirebaseFirestorePlugin"]];
   [FLTFirebaseAuthPlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTFirebaseAuthPlugin"]];
   [FLTFirebaseCorePlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTFirebaseCorePlugin"]];
+  [FlutterBackgroundServicePlugin registerWithRegistrar:[registry registrarForPlugin:@"FlutterBackgroundServicePlugin"]];
   [FluttertoastPlugin registerWithRegistrar:[registry registrarForPlugin:@"FluttertoastPlugin"]];
-  [JustAudioPlugin registerWithRegistrar:[registry registrarForPlugin:@"JustAudioPlugin"]];
   [MusicKitPlugin registerWithRegistrar:[registry registrarForPlugin:@"MusicKitPlugin"]];
   [PathProviderPlugin registerWithRegistrar:[registry registrarForPlugin:@"PathProviderPlugin"]];
   [PermissionHandlerPlugin registerWithRegistrar:[registry registrarForPlugin:@"PermissionHandlerPlugin"]];
   [SharedPreferencesPlugin registerWithRegistrar:[registry registrarForPlugin:@"SharedPreferencesPlugin"]];
   [SignInWithApplePlugin registerWithRegistrar:[registry registrarForPlugin:@"SignInWithApplePlugin"]];
-  [SqflitePlugin registerWithRegistrar:[registry registrarForPlugin:@"SqflitePlugin"]];
+  [URLLauncherPlugin registerWithRegistrar:[registry registrarForPlugin:@"URLLauncherPlugin"]];
 }
 
 @end

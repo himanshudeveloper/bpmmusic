@@ -7,7 +7,7 @@ part of 'single_library_album_provider.dart';
 // **************************************************************************
 
 String _$singlelibraryalbumHash() =>
-    r'7f71258eb1b37d2c658da32fac597eb6fa00d92a';
+    r'd30ffae356e79e9a51791fbd2a0144a16b37f861';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -35,8 +35,7 @@ class _SystemHash {
 const singlelibraryalbumProvider = SinglelibraryalbumFamily();
 
 /// See also [singlelibraryalbum].
-class SinglelibraryalbumFamily
-    extends Family<AsyncValue<SingleAlbumtLibraryModel>> {
+class SinglelibraryalbumFamily extends Family<AsyncValue<LibrarySongModel>> {
   /// See also [singlelibraryalbum].
   const SinglelibraryalbumFamily();
 
@@ -75,7 +74,7 @@ class SinglelibraryalbumFamily
 
 /// See also [singlelibraryalbum].
 class SinglelibraryalbumProvider
-    extends AutoDisposeFutureProvider<SingleAlbumtLibraryModel> {
+    extends AutoDisposeFutureProvider<LibrarySongModel> {
   /// See also [singlelibraryalbum].
   SinglelibraryalbumProvider({
     required String id,
@@ -110,8 +109,7 @@ class SinglelibraryalbumProvider
 
   @override
   Override overrideWith(
-    FutureOr<SingleAlbumtLibraryModel> Function(SinglelibraryalbumRef provider)
-        create,
+    FutureOr<LibrarySongModel> Function(SinglelibraryalbumRef provider) create,
   ) {
     return ProviderOverride(
       origin: this,
@@ -128,7 +126,7 @@ class SinglelibraryalbumProvider
   }
 
   @override
-  AutoDisposeFutureProviderElement<SingleAlbumtLibraryModel> createElement() {
+  AutoDisposeFutureProviderElement<LibrarySongModel> createElement() {
     return _SinglelibraryalbumProviderElement(this);
   }
 
@@ -146,14 +144,13 @@ class SinglelibraryalbumProvider
   }
 }
 
-mixin SinglelibraryalbumRef
-    on AutoDisposeFutureProviderRef<SingleAlbumtLibraryModel> {
+mixin SinglelibraryalbumRef on AutoDisposeFutureProviderRef<LibrarySongModel> {
   /// The parameter `id` of this provider.
   String get id;
 }
 
 class _SinglelibraryalbumProviderElement
-    extends AutoDisposeFutureProviderElement<SingleAlbumtLibraryModel>
+    extends AutoDisposeFutureProviderElement<LibrarySongModel>
     with SinglelibraryalbumRef {
   _SinglelibraryalbumProviderElement(super.provider);
 

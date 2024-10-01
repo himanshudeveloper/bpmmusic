@@ -1,3 +1,4 @@
+import 'package:bmp_music/features/bpm/services/bpm_check.dart';
 import 'package:bmp_music/features/bpm/services/read_bpm.dart';
 import 'package:bmp_music/features/bpm/services/save_bpm.dart';
 import 'package:flutter/material.dart';
@@ -10,8 +11,15 @@ class BPMNotifier extends ChangeNotifier {
 
   int get value => _value;
 
+  int sfbpm = 0;
+  int get sfvalue => sfbpm;
+  bool _checked = true;
+
+  bool get checked => _checked;
+
   Future<void> init() async {
-    _value = await readBPM() ?? 100;
+    _checked = await readCheck() ?? false;
+    _value = await readBPM() ?? 70;
     notifyListeners();
   }
 
@@ -21,12 +29,15 @@ class BPMNotifier extends ChangeNotifier {
     notifyListeners();
   }
 
-  bool _checked = true;
-
-  bool get checked => _checked;
+  Future<void> updateSpValue(int newValue) async {
+    sfbpm = newValue;
+    // await saveBPM(newValue);
+    notifyListeners();
+  }
 
   void updateChecked() {
     _checked = !_checked;
+    saveCheck(_checked);
     notifyListeners();
   }
 }

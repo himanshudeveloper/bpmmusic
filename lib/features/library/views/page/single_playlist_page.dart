@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:bmp_music/features/library/provider/single_librrary_playlist_provider.dart';
 import 'package:bmp_music/features/song/providers/selected_music_provider.dart';
+import 'package:bmp_music/features/song/ui/components/player_deck.dart';
 import 'package:bmp_music/features/song/ui/components/song_item.dart';
 import 'package:bmp_music/shared/ui/components/artwork_view.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +17,7 @@ class SinglePlaylistPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final singleplaylist = ref.watch(singlelibraryplaylistProvider(id: id));
     return Scaffold(
+      appBar: AppBar(),
       body: singleplaylist.when(
         data: (data) {
           return SingleChildScrollView(

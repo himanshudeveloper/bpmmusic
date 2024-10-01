@@ -14,11 +14,19 @@ class ArtWorkView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String finalUrl = url!
-        .replaceAll('{w}', '${width.toInt()}')
-        .replaceAll('{h}', '${height.toInt()}');
+    String finalUrl = '';
 
-    print("Filnalurlfffff   $finalUrl");
+    if (url!.contains("{w}")) {
+      finalUrl = url!
+          .replaceAll('{w}', '${width.toInt()}')
+          .replaceAll('{h}', '${height.toInt()}');
+    } else if (url!.contains("mzstatic.com")) {
+      finalUrl = "$url";
+    } else {
+      finalUrl =
+          "https://is1-ssl.mzstatic.com/image/thumb/$url/${width.toInt()}x${height.toInt()}bb.jpg";
+    }
+
     return Container(
       height: height,
       width: width,
@@ -43,5 +51,42 @@ class ArtWorkView extends StatelessWidget {
               ),
             ),
     );
+  }
+}
+
+class ArtWorkView2 extends StatelessWidget {
+  final String? url;
+  final double height;
+  final double width;
+  const ArtWorkView2({
+    super.key,
+    required this.url,
+    required this.height,
+    required this.width,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    String finalUrl = '';
+
+    if (url!.contains("{w}")) {
+      finalUrl = url!
+          .replaceAll('{w}', '${width.toInt()}')
+          .replaceAll('{h}', '${height.toInt()}');
+    } else if (url!.contains("mzstatic.com")) {
+      finalUrl = "$url";
+    } else {
+      finalUrl =
+          "https://is1-ssl.mzstatic.com/image/thumb/$url/${width.toInt()}x${height.toInt()}bb.jpg";
+    }
+
+    return CircleAvatar(
+        radius: 42,
+        child: url == null
+            ? const SizedBox.shrink()
+            : CircleAvatar(
+                radius: 40,
+                backgroundImage: NetworkImage(finalUrl),
+              ));
   }
 }

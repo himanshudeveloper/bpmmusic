@@ -6,7 +6,7 @@ part of 'token_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$tokenProviderHash() => r'cd3222cd5755325c7cd8c758f869ed5b20a3719a';
+String _$tokenProviderHash() => r'4382fc4dd0d5608dd70d7ee8aa7601e96961a78f';
 
 /// See also [TokenProvider].
 @ProviderFor(TokenProvider)

@@ -76,15 +76,6 @@ class HttpLibraryRepo extends LibraryRepo {
   }
 
   @override
-  Future<SingleAlbumtLibraryModel> getsinglealbumLibrary(
-      {required String id}) async {
-    final data = await dioservice.get("$singlealbumpath/$id/catalog");
-    final SingleAlbumtLibraryModel songs =
-        SingleAlbumtLibraryModel.fromJson(data);
-    return songs;
-  }
-
-  @override
   Future<SingleArtistLibraryModel> getsingleartistLibrary(
       {required String id}) async {
     final data =
@@ -92,5 +83,29 @@ class HttpLibraryRepo extends LibraryRepo {
     final SingleArtistLibraryModel songs =
         SingleArtistLibraryModel.fromJson(data);
     return songs;
+  }
+
+  @override
+  Future<LibrarySongModel> getsinglealbumLibrary({required String id}) async {
+    final data = await dioservice.get("$singlealbumpath/$id/tracks");
+    final LibrarySongModel songs = LibrarySongModel.fromJson(data);
+    return songs;
+  }
+
+  @override
+  Future<LibrarySongModel> getmultiplealbumSong({required String ids}) async {
+    List<String> items = ids.split(',');
+    print("dkdkdkdkkdk${items}");
+
+    List<LibData> libdata = [];
+    for (int i = 0; i < items.length; i++) {
+      print("dkdkdkdkkdk${items[i]}");
+
+      final data = await dioservice.get("$libraryalbumpath/${items[i]}/tracks");
+      final LibrarySongModel songs = LibrarySongModel.fromJson(data);
+      libdata.addAll(songs.data!);
+    }
+
+    return LibrarySongModel(data: libdata);
   }
 }

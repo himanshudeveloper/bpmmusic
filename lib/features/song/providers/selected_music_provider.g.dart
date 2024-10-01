@@ -6,7 +6,7 @@ part of 'selected_music_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$selectedMusicHash() => r'636d49b364e70a20ab6f12529c58de2b80ab7601';
+String _$selectedMusicHash() => r'671df8042c2c934eb6b4678446af8b4aebd8587e';
 
 /// See also [SelectedMusic].
 @ProviderFor(SelectedMusic)

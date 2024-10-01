@@ -47,8 +47,10 @@ class PlaylistView extends ConsumerWidget {
             );
           },
           error: (error, stackTrace) => Text(error.toString()),
-          loading: () => Center(
-            child: CircularProgressIndicator(),
+          loading: () => const Center(
+            child: CircularProgressIndicator(
+              color: Colors.pink,
+            ),
           ),
         ));
   }

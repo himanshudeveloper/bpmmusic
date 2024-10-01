@@ -1,4 +1,3 @@
-
 /// Http Service Interface
 abstract class HttpService {
   /// Http base url
@@ -12,6 +11,7 @@ abstract class HttpService {
     String endpoint, {
     Map<String, dynamic>? queryParameters,
     bool forceRefresh = false,
+    String? customtoken,
   });
 
   /// Http post request

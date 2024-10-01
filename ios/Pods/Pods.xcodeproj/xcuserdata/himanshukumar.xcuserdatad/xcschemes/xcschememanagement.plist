@@ -184,12 +184,12 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>audio_service.xcscheme</key>
+		<key>app_tracking_transparency-app_tracking_transparency_privacy.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>audio_session.xcscheme</key>
+		<key>app_tracking_transparency.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -209,17 +209,17 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>flutter_background_service_ios.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>fluttertoast-fluttertoast_privacy.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 		</dict>
 		<key>fluttertoast.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>just_audio.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -284,12 +284,12 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>sqflite-sqflite_darwin_privacy.xcscheme</key>
+		<key>url_launcher_ios-url_launcher_ios_privacy.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>sqflite.xcscheme</key>
+		<key>url_launcher_ios.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>

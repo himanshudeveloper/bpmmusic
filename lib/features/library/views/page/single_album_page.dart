@@ -12,12 +12,12 @@ class SingleAlbumPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final albums = ref.watch(singlelibraryalbumProvider(id: id));
-    return Scaffold(
-      body: albums.when(
+    return SingleChildScrollView(
+      child: albums.when(
           data: (data) {
             return Column(
               children: [
-                const SizedBox(height: 5),
+                const SizedBox(height: 15),
                 ArtWorkView(
                     url: data.data!.first.attributes!.artwork == null
                         ? ""
@@ -121,37 +121,37 @@ class SingleAlbumPage extends ConsumerWidget {
                   ],
                 ),
                 const SizedBox(height: 15),
-                Expanded(
-                  child: ListView.builder(
-                      itemCount: data.data!.length,
-                      itemBuilder: (context, index) {
-                        String title =
-                            data.data![index].attributes!.name.toString();
-                        String artist =
-                            data.data![index].attributes!.artistName.toString();
-                        String url =
-                            data.data![index].attributes!.artwork == null
-                                ? ""
-                                : data.data![index].attributes!.artwork!.url
-                                    .toString();
+                ListView.builder(
+                    primary: false,
+                    physics: const NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    itemCount: data.data!.length,
+                    itemBuilder: (context, index) {
+                      String title =
+                          data.data![index].attributes!.name.toString();
+                      String artist =
+                          data.data![index].attributes!.artistName.toString();
+                      String url = data.data![index].attributes!.artwork == null
+                          ? ""
+                          : data.data![index].attributes!.artwork!.url
+                              .toString();
 
-                        return SongItem(
-                            isPlaying: false,
-                            title: title,
-                            artist: artist,
-                            onSongTap: () {
-                              ref
-                                  .read(selectedMusicProvider.notifier)
-                                  .addmusic(song: data.data!.first.toJson());
-                            },
-                            url: url);
-                      }),
-                )
+                      return SongItem(
+                          isPlaying: false,
+                          title: title,
+                          artist: artist,
+                          onSongTap: () {
+                            ref
+                                .read(selectedMusicProvider.notifier)
+                                .addmusic(song: data.data!.first.toJson());
+                          },
+                          url: url);
+                    })
               ],
             );
           },
           error: (err, _) => Text(err.toString()),
-          loading: () => Center(
+          loading: () => const Center(
                 child: CircularProgressIndicator(),
               )),
     );

@@ -1,4 +1,4 @@
-import 'package:just_audio/just_audio.dart';
+import 'package:bmp_music/features/song/enums.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 Future<void> saveLoopMode(LoopMode loopMode) async {
